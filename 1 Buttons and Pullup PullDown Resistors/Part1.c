@@ -32,9 +32,9 @@ int main(void)
 
     while(1)
     {
-        if (P2IN & BIT3)            // If S2 (P2.3) is pressed
+        if (!(P2IN & BIT3))            // If S2 (P2.3) is not pressed
             P6OUT ^= BIT6;          // Toggle P6.6
-        if (P4IN & BIT1)            // If S1 (P4.1) is pressed
+        if (!(P4IN & BIT1))            // If S1 (P4.1) is not pressed
             P1OUT ^= BIT0;          // Toggle P1.0
         __delay_cycles(100000);             // Delay for 100000*(1/MCLK)=0.1s
     }
@@ -62,8 +62,8 @@ void gpioInit()
     */
 
        P2REN |= BIT3;               // Enable Resistor on P2.3
-       P2OUT |= BIT3;               // Configure Resistor on P2.3 to be Pullup
+       P2OUT |= BIT3;               // Configure Resistor on P2.3 to be Pull down
 
        P4REN |= BIT1;               // Enable Resistor on P4.1
-       P4OUT |= BIT1;               // Configure Resistor on P4.1 to be Pullup
+       P4OUT |= BIT1;               // Configure Resistor on P4.1 to be Pull down
 }
