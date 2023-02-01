@@ -78,3 +78,5 @@ Then load up Energy Trace and perform the similar capture of Power with the LED 
 # Screenshots and Answers to Questions
 
 
+![WithInterupts](https://user-images.githubusercontent.com/115189729/216052897-e0beaaee-734b-40bf-ab9e-028789ab956f.PNG)
+![witoutinterupts](https://user-images.githubusercontent.com/115189729/216052898-cf71b701-0678-4dbc-bbf2-2ac0f74f4fb9.PNG)
