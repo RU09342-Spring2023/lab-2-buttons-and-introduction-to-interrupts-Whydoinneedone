@@ -53,26 +53,26 @@ int main(void)
 
 while(1)
 {
-    if (i == 15)
-    {   state=0;
-        i=0;
+    if (i == 15)            // Used for the warning state, 15 cycles allow the led to blink for 15 sec before returning to safe state
+    {   state=0;            // used to return to the safe state
+        i=0;                // resets the count for further use
     }
 
   switch (state) {
 
   case 0:      // AllClear
         {
-            P1OUT &= ~BIT0;                      // Toggle P1.0
-            P6OUT ^= BIT6;
+            P1OUT &= ~BIT0;                     // Make sure the red led is off
+            P6OUT ^= BIT6;                      // Toggle P6.6
             __delay_cycles(100000);             // Delay for 100000*(1/MCLK)=0.1s
-            P6OUT ^= BIT6;
-            __delay_cycles(3000000);             // Delay for 100000*(1/MCLK)=0.1s
+            P6OUT ^= BIT6;                      // Toggle P6.6
+            __delay_cycles(3000000);            // Delay for 3000000*(1/MCLK)=3s
             break;
         }
   case 1:
     {
 
-        P1OUT &= ~BIT0;                      // Toggle P1.0
+        P1OUT &= ~BIT0;                     // Make sure the red led is off
         P1OUT ^= BIT0;                      // Toggle P1.0
         __delay_cycles(500000);             // Delay for 500000*(1/MCLK)=0.5s
         P1OUT ^= BIT0;                      // Toggle P1.0
@@ -86,38 +86,45 @@ while(1)
 
     case 2:
     {
-        P1OUT &= ~BIT0;                      // Toggle P1.0
-        P1OUT ^= BIT0;                      // Toggle P1.0
+        P1OUT &= ~BIT0;                     // Make sure the red led is off
+        P1OUT ^= BIT0;                      // Turns on the red led
         break;
 
     }
+    case 3:
+       {
+           state = 0;                   // Turns on the red led
+           break;
+
+       }
 
   }
 }
 }
 
-#pragma vector=PORT2_VECTOR
+/*
+#pragma vector=PORT2_VECTOR                 // Used to simulate the detector
 __interrupt void Port_2(void)
 {
- /* if (state == 0)
+  if (state == 0)
       state= 1  ;
   else if (state == 1 )
       state= 2  ;
 
 
-   P2IFG &= ~BIT3;                         // Clear P1.3 IFG
-   */
-    state ++;
-    i=0;
-    P2IFG &= ~BIT3;                         // Clear P1.3 IFG
-}
+   P2IFG &= ~BIT3;
+  //  state ++;                               // Used to increase the alert state by one level
+ //   i=0;                                    // Used to reset the timer for warning level
+ //   P2IFG &= ~BIT3;                         // Clear P2.3 IFG
+//   }
+*/
 
 
-
-#pragma vector=PORT4_VECTOR
+#pragma vector=PORT4_VECTOR                 // Used to simulate the sleep button
 __interrupt void Port_4(void)
 {
-   state = 0;
-   P4IFG &= ~BIT1;                         // Clear P1.3 IFG
+    state ++;                               // Used to increase the alert state by one level
+    i=0;                                    // Used to reset the timer for warning level
+   P4IFG &= ~BIT1;                          // Clear P4.1 IFG
 
 }
