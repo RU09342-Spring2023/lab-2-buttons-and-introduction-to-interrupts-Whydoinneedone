@@ -35,18 +35,21 @@ int main(void)
          P2REN |= BIT3;                          // P2.3 pull-up register enable
          P2IES |= BIT3;                         // P2.3 Low --> High edge
          P2IE |= BIT3;                           // P2.3 interrupt enabled
-
+         P2IFG &= ~BIT3;
 
          P4OUT |= BIT1;                          // Configure P2.3 as pulled-up
          P4REN |= BIT1;                          // P2.3 pull-up register enable
          P4IES |= BIT1;                         // P2.3 Low --> High edge
          P4IE |= BIT1;                           // P2.3 interrupt enabled
-
+         P4IFG &= ~BIT1;
          PM5CTL0 &= ~LOCKLPM5;                   // Disable the GPIO power-on default high-impedance mode
                                                   // to activate previously configured port settings
 
-         __bis_SR_register(GIE);                 // Enter LPM3 w/interrupt
 
+/*
+         __bis_SR_register( GIE);                 // Enter LPM3 w/interrupt
+*/
+         _enable_interrupts();
 
 while(1)
 {
@@ -105,6 +108,7 @@ __interrupt void Port_2(void)
    P2IFG &= ~BIT3;                         // Clear P1.3 IFG
    */
     state ++;
+    i=0;
     P2IFG &= ~BIT3;                         // Clear P1.3 IFG
 }
 
