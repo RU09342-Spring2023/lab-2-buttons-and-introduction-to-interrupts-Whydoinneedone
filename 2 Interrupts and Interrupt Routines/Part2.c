@@ -110,7 +110,7 @@ int main(void)
     P1OUT &= ~BIT0;                         // Clear P1.0 output latch for a defined power-on state
     P1DIR |= BIT0;                          // Set P1.0 to output direction
 
-    P6DIR |= BIT6;              // Configure P6.6 to an Output
+    P6DIR |= BIT6;                         // Configure P6.6 to an Output
     P6OUT &= ~BIT6;
 
 
