@@ -1,53 +1,7 @@
-# Part 4: Occupancy Detection and Alert System
-You are being asked to design a rudimentary occupancy alert system with the following behavior:
-- The system when turned on needs to blink the Green LED once every 3 seconds to show it is armed.
-- When the occupancy sensor detects someone, it will output a Logic 1, and your system needs to move into a "Warning" state, where the Green LED stops blinking, and the Red LED Blinks once per second (500ms on, 500ms off).
-- If the occupancy detector still shows someone there after 10 seconds, your system should indicate this with the RED Led constantly staying on, and move into the ALERT state.
-- If the occupancy detector **before** the 15 seconds goes back to a 0, indicating the room is now empty, then the system should go back to the armed state.
-- When in the ALERT State, the only way for the system to go back to the Armed state is to press the P4.1 Button.
+# Occupancy Detection and Alert System
+This code is used to simulate an occupancy dector. When the system is first powered on the system is programed to blink the green led for .5 seconds every 3 seconds. This is to show it is armed and that the system is working. When the 2.3 button is presses the system is programed to move into the "Warning" state. In this state the Green LED stops blinking, and the Red LED Blinks once per second. This state will last for 15 seconds until it goes back to the safe state. if the button is pressed before the 15 seconds are up then it will move into the "Alarm" state. in this state the red LED will remain on and it will stay on until the sleep button is pressed. 
 
-## Occupancy Sensor
-You will be **first** *emulating* the Occupancy Sensor with the P4.1 button. This can be used for pretty much all of your testing and design.
-
-When you have a design that is working, you can then test your code with a [Passive Infrared Occupancy Detector](https://www.amazon.com/DIYmall-HC-SR501-Motion-Infrared-Arduino/dp/B012ZZ4LPM)
-
-## Getting Started
-I highly recommend on paper or a whiteboard drawing up a state machine or something to help understand the flow of the system.
-
-From there, you should work on each stage/state and see if the transitions work. For example, can you get the system to go from the armed state to the warning state.
-
-Remember that your code is going to be running in a loop, so you need to make sure you consider how this is going to work when trying to blink the LEDs.
-
-## Do I need to use Interrupts?
-Well, it would be cool, but at the end of the day, we are asking you for a design. Start with polling or what you feel comfortable with, but we would like you to try out using the interrupts, maybe at least for the system Disarm Button.
-
-## Navigating multiple states
-One way to approach a system with multiple states is to actually use a case statement in your main loop. For example:
-```c
-#define ARMED_STATE 0
-#define WARNING_STATE 1
-#define ALERT_STATE 2
-
-// Put some initialization here
-
-char state = ARMED_STATE;
-
-while(1)
-{
-  switch (state) {
-    case ARMED_STATE:
-    {
-      // Do something in the ARMED state
-      // If something happens, you can move into the WARNING_STATE
-      // state = WARNING_STATE
-    }
-    case WARNING_STATE:
-    {
-      // Do something in the WARNING_STATE
-    }
-  }
-}
-```
-
-## Submission
-There is a sample file in this folder you will need to import into your Code Composer and work on. You will need to submit that file, documented well, and a README.md file (you can replace this one) with the documentation that tells someone about what the code is, what it does, how it works etc. For an audience for your README, imagine you at the beginning of the lab, looking for code which does, well, this. 
+This code is run primarially utilizing case satements, with each state being a diffrent case. Case 0 is the safe state. When in this state the only thing that happens is that the green led blinks every three seconds. When the button is pressed it goes to an interupt that increasses the state by one level and also resets the timer count. 
+Case 1 is the warning state. In this state there is a loop which will repeat 15 times. In this loop the red Led will blink every second for half a second on and half a second off. when the 15 seconds is over and if there has been no other buttons pressed then the loop will end reseting the count and the state to 0. 
+Case 2 is the alarm state. In this state the red led remains on and nothing else happens. It will remain in this state until there is outside influence. 
+Case 3 is a reset state. it simply resets the state to 0. 
