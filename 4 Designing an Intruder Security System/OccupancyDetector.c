@@ -54,9 +54,10 @@ int main(void)
 while(1)
 {
     if (i == 15)            // Used for the warning state, 15 cycles allow the led to blink for 15 sec before returning to safe state
-    {   state=0;            // used to return to the safe state
+    {   state=2;            // used to return to the safe state
         i=0;                // resets the count for further use
     }
+
 
   switch (state) {
 
