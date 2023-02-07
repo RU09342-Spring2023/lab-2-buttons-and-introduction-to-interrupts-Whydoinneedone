@@ -84,15 +84,25 @@ while(1)
         }
 
 
+  case 2:
+  {
+      if (!(P4IN &= BIT1))
+          state=3;
+      else
+          state=0;
 
-    case 2:
+
+  }
+
+
+    case 3:
     {
         P1OUT &= ~BIT0;                     // Make sure the red led is off
         P1OUT ^= BIT0;                      // Turns on the red led
         break;
 
     }
-    case 3:
+    case 4:
        {
            state = 0;                   // Resets to case 0
            break;
