@@ -93,7 +93,7 @@ while(1)
     }
     case 3:
        {
-           state = 0;                   // Turns on the red led
+           state = 0;                   // Resets to case 0
            break;
 
        }
